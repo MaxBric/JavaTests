@@ -1,16 +1,16 @@
-package fr.imie.connectors;
+package fr.imie.mock;
+
 
 import fr.imie.IConnector;
 import fr.imie.enums.Messages;
 
-/**
- * Created by Nicolas MORICET on 19/01/2017.
- */
-public class FXCM implements IConnector {
+public class Bank implements IConnector {
+    @Override
     public Messages placeOrder(Long volume, String product) {
         return null;
     }
 
+    @Override
     public Messages closeOrder(Long volume, String product) {
         return null;
     }

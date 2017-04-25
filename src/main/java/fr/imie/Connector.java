@@ -1,11 +1,36 @@
 package fr.imie;
 
-public class Connector implements IConnector {
-    public void placeOrder(Long volume, String product) {
+import fr.imie.Exceptions.InvalidVolumeException;
+import fr.imie.enums.Messages;
 
+import java.util.Locale;
+
+public class Connector implements IConnector {
+    private Long volumeTotal = 0L;
+
+    public Messages placeOrder(Long volume, String product) {
+        Messages msg = getCheckVolume(volume);
+
+        if(msg.equals(Messages.ACCEPT)) {
+            volumeTotal += volume;
+        }
+
+        return msg;
     }
 
-    public void closeOrder(Long volume, String product) {
+    public Messages closeOrder(Long volume, String product) throws InvalidVolumeException {
+        if(volumeTotal < volume) {
+            throw new InvalidVolumeException();
+        }
 
+        return getCheckVolume(volume);
+    }
+
+    private Messages getCheckVolume(Long volume) {
+        if(volume == 0) {
+            return Messages.REJECT;
+        }
+
+        return Messages.ACCEPT;
     }
 }
